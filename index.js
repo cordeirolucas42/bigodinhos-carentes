@@ -11,9 +11,8 @@ const UERJ = {long: -43.23620, lat: -22.91099}
 //mensagem padrão
 const defaultMsg = "Olá! Somos a Bigodinhos Carentes. Quer adotar um gatinho? Fale com a gente pelo instagram https://www.instagram.com/bigodinhoscarentes/ ou pela DM aqui no Twitter. Temos vários gatos precisando de amor e cuidados em busca de adoção responsável (Rio de Janeiro/RJ)."
 
-//até quantas horas atrás buscar tweets
-// const hours_ago = 0.92;
-const hours_ago = 0.1;
+//até quantos minutos atrás buscar tweets
+const min_ago = 9.9;
 
 //critérios de busca
 const query = "adotar um gato"
@@ -28,7 +27,7 @@ const client = new TwitterApi({
 // código a ser executado a cada hora para checar se houve tweets relacionados a adoção de gatos
 const getTweets = async () => {
     //calcula o start_time para a query a partir do tempo atual
-    let start_time = (new Date(Date.now() - (hours_ago*60*60*1000))).toISOString()
+    let start_time = (new Date(Date.now() - (min_ago*60*1000))).toISOString()
     //recupera o tweet fixado para utilizar como mensagem padrão do bot
     let twitter_pinned = await client.v2.userByUsername('BigodinhosRJ',{ expansions: "pinned_tweet_id"});
     let msg = twitter_pinned ? twitter_pinned.includes.tweets[0].text : defaultMsg

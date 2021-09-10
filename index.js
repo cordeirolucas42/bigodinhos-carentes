@@ -35,10 +35,6 @@ const getTweets = async () => {
     //realiza query de tweets que não sejam retweets, a partir do start_time, adicionando campos de localização do tweet e do usuário, recuperando o máximo de tweets (100)
     const result = await client.v2.get('tweets/search/recent', { query: `${query} -is:retweet`, start_time:start_time, expansions: "geo.place_id,author_id","user.fields":"location", "place.fields": "full_name,geo,id","tweet.fields": "geo,created_at", max_results:100});
 
-    //debug test
-    // const result = await client.v2.get('tweets/search/recent', { query: 'teste2 from:pulltheripcord', max_results:100});
-    // if (result.data) await client.v1.reply(pin_text, result.data[0].id);
-
     // itera por todos os tweets que atendem aos critérios
     if (result.data) {
         for (const tweet of result.data) {
@@ -59,7 +55,6 @@ const getTweets = async () => {
                     // envia repply para o tweet que achou, utilizando a mensagem fixada ou a mensagem padrão
                     await client.v1.reply(msg, tweet.id);
                 }
-                // console.log(userLocation)
             }
         }
     }    
